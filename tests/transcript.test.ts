@@ -1,7 +1,8 @@
 import { SessionManager } from "@earendil-works/pi-coding-agent";
 import { describe, expect, it } from "vitest";
 
-import { projectAssistantMessage, projectSession } from "../src/server/transcript.js";
+import { SessionView } from "../src/server/session-view.js";
+import { projectAssistantMessage } from "../src/server/transcript.js";
 
 const usage = {
   input: 1,
@@ -26,7 +27,7 @@ describe("transcript projection", () => {
       timestamp: 1,
     });
 
-    expect(projectSession(manager, false).transcript[0]).toMatchObject({
+    expect(new SessionView(manager, false).snapshot().transcript[0]).toMatchObject({
       kind: "message",
       role: "user",
       blocks: [{ type: "text", text: "Inspect this" }, image],
@@ -85,7 +86,7 @@ describe("transcript projection", () => {
       timestamp: 3,
     });
 
-    const result = projectSession(manager, false);
+    const result = new SessionView(manager, false).snapshot();
     expect(result.transcript).toHaveLength(2);
     expect(result.transcript[1]).toMatchObject({
       kind: "message",

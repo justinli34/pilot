@@ -72,7 +72,7 @@ const ConfigFileSchema = z.strictObject({
   advanced: z.optional(AdvancedConfigSchema),
 });
 
-export type ConfigFile = z.infer<typeof ConfigFileSchema>;
+type ConfigFile = z.infer<typeof ConfigFileSchema>;
 export type AppMode = "production" | "development";
 
 export interface AppConfig {
@@ -145,14 +145,6 @@ export function defaultLogPath(options: ConfigPathOptions = {}): string {
   const base =
     configuredHome && isAbsolute(configuredHome) ? configuredHome : join(home, ".local", "state");
   return join(base, "pilot", "pilot.log");
-}
-
-export function exampleConfig(): ConfigFile {
-  return {
-    port: 3210,
-    allowedOrigins: [],
-    logLevel: "info",
-  };
 }
 
 function issuePath(path: PropertyKey[]): string {

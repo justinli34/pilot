@@ -6,8 +6,6 @@
   --font-size-md: 14px;
   --font-size-lg: 16px;
   --font-size-xl: 18px;
-  --font-size-2xl: 20px;
-  --font-weight-regular: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 650;
@@ -36,7 +34,6 @@
   --space-10: 40px;
   --space-12: 48px;
   --space-14: 56px;
-  --space-16: 64px;
   --space-20: 80px;
 
   /* Shape and borders */
@@ -98,7 +95,6 @@
   --color-info: #4ea7fc;
   --color-info-text: #82b9ee;
   --color-info-border: rgba(78, 167, 252, 0.35);
-  --color-success: #4cb782;
   --color-success-text: #71b99a;
   --color-success-text-muted: #bfd1c7;
   --color-success-border: #29352f;
@@ -185,7 +181,6 @@
   --shadow-dialog: 0 20px 55px rgba(0, 0, 0, 0.55);
   --shadow-dialog-lg: 0 22px 60px rgba(0, 0, 0, 0.6);
   --shadow-accent: 0 2px 8px rgba(108, 114, 232, 0.2);
-  --shadow-danger-ring: 0 0 0 3px rgba(230, 106, 106, 0.1);
   --blur-xs: 1px;
   --blur-sm: 5px;
   --blur-md: 10px;

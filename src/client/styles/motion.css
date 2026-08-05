@@ -6,8 +6,3 @@
     transform: rotate(360deg);
   }
 }
-@keyframes pulse {
-  50% {
-    opacity: 0.55;
-  }
-}

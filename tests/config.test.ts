@@ -7,7 +7,6 @@ import { describe, expect, it } from "vitest";
 import {
   defaultConfigPath,
   defaultLogPath,
-  exampleConfig,
   loadConfig,
   parseConfig,
 } from "../src/server/config.js";
@@ -65,7 +64,6 @@ describe("Pilot configuration", () => {
     await writeFile(
       path,
       JSON.stringify({
-        ...exampleConfig(),
         port: 4321,
         allowedOrigins: ["https://pilot.example/"],
         titleGeneration: {
@@ -109,7 +107,7 @@ describe("Pilot configuration", () => {
       logLevel: "info",
     });
 
-    const valid = exampleConfig();
+    const valid = {};
     expect(() => parseConfig({ ...valid, extra: true })).toThrow("Unrecognized key");
     expect(() => parseConfig({ ...valid, runtimeIdleMinutes: 7 })).toThrow("Unrecognized key");
     expect(() => parseConfig({ ...valid, port: 0 })).toThrow("port");

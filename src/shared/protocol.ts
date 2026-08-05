@@ -646,7 +646,3 @@ export function parseWorkspaceSessionsStreamEnvelope(
     `Invalid workspace sessions stream message: ${firstIssue(result.error)}`,
   );
 }
-
-export function isServerEnvelope(value: unknown): value is ServerEnvelope {
-  return ServerEnvelopeSchema.safeParse(value).success;
-}

@@ -1,4 +1,4 @@
-import type { SessionEntry, SessionManager } from "@earendil-works/pi-coding-agent";
+import type { SessionEntry } from "@earendil-works/pi-coding-agent";
 
 import {
   TRANSCRIPT_LIMIT_NOTICE_ID,
@@ -449,10 +449,4 @@ export function boundProjection(
     truncated: trimmed.truncated || toolDataTruncated,
     transcriptTruncated: trimmed.truncated,
   };
-}
-
-export function projectSession(manager: SessionManager, isBusy: boolean): ProjectionResult {
-  const projection: MutableProjection = { transcript: [], tools: new Map() };
-  for (const entry of manager.getBranch()) appendSessionEntry(projection, entry);
-  return boundProjection(projection, isBusy);
 }

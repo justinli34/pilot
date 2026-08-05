@@ -95,13 +95,6 @@
   .sidebar-resizer {
     display: none;
   }
-  .session-heading {
-    min-height: var(--control-height-touch);
-  }
-  .session-heading .icon-button {
-    width: var(--control-height-xl);
-    height: var(--control-height-xl);
-  }
   .session-row {
     height: var(--control-height-touch);
   }
@@ -367,7 +360,6 @@
   .project-row,
   .session-row,
   .archive-header,
-  .sidebar-load-more,
   .message-queue-header,
   .project-browser-toolbar {
     min-height: var(--control-height-touch);

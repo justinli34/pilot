@@ -8,7 +8,6 @@ import {
   ProtocolError,
   RenameSessionRequestSchema,
   UpdateSessionRequestSchema,
-  isServerEnvelope,
   parseClientEnvelope,
   parseServerEnvelope,
 } from "../src/shared/protocol.js";
@@ -165,7 +164,6 @@ describe("parseClientEnvelope", () => {
       sessionId: "session",
       sequence: 1,
     };
-    expect(isServerEnvelope(shallowOnly)).toBe(false);
     expect(() => parseServerEnvelope(JSON.stringify(shallowOnly))).toThrow(
       "Invalid server message",
     );
