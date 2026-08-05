@@ -1,0 +1,452 @@
+@media (max-width: 1120px) {
+  .transcript-inner {
+    width: calc(100% - var(--space-10));
+  }
+  .composer-wrap {
+    padding-right: var(--space-5);
+    padding-left: var(--space-5);
+  }
+}
+
+@media (max-width: 860px) {
+  .transcript-inner {
+    width: calc(100% - var(--space-8));
+  }
+}
+
+@media (max-width: 760px) {
+  :root {
+    --is-mobile-viewport: 1;
+  }
+  .app-shell,
+  .app-shell.sidebar-is-collapsed {
+    position: relative;
+    min-width: 0;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .app-shell > .sidebar {
+    position: fixed;
+    z-index: var(--z-drawer);
+    inset: 0 auto 0 0;
+    width: min(88vw, var(--drawer-width));
+    max-width: calc(100vw - var(--control-height-touch));
+    height: 100%;
+    padding-top: env(safe-area-inset-top);
+    padding-left: env(safe-area-inset-left);
+    visibility: hidden;
+    box-shadow: var(--shadow-drawer);
+    transform: translateX(-102%);
+    transition:
+      transform var(--duration-slow) var(--ease-standard),
+      visibility var(--duration-slow) var(--ease-standard);
+  }
+  .project-tree {
+    padding-bottom: 0;
+  }
+  .archive-section {
+    padding-bottom: var(--space-2-5);
+  }
+  @supports (height: 100dvh) {
+    .app-shell > .sidebar {
+      height: 100dvh;
+    }
+  }
+  .app-shell.mobile-sidebar-open > .sidebar {
+    visibility: visible;
+    transform: translateX(0);
+  }
+  .app-shell > .sidebar,
+  .mobile-sidebar-backdrop,
+  .mobile-sidebar-swipe-edge {
+    touch-action: pan-y pinch-zoom;
+  }
+  .mobile-sidebar-backdrop {
+    position: fixed;
+    z-index: var(--z-backdrop);
+    inset: 0;
+    display: block;
+    padding: 0;
+    border: 0;
+    background: var(--color-bg-backdrop);
+    opacity: 0;
+    visibility: hidden;
+    cursor: pointer;
+    pointer-events: none;
+    transition:
+      opacity var(--duration-slow) var(--ease-standard),
+      visibility var(--duration-slow) var(--ease-standard);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .mobile-sidebar-open > .mobile-sidebar-backdrop {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+  .mobile-sidebar-swipe-edge {
+    position: fixed;
+    z-index: var(--z-raised);
+    inset: calc(var(--mobile-header-height) + env(safe-area-inset-top)) auto 0 0;
+    display: block;
+    width: max(var(--space-4), env(safe-area-inset-left));
+  }
+  .mobile-sidebar-open > .mobile-sidebar-swipe-edge {
+    pointer-events: none;
+  }
+  .sidebar-resizer {
+    display: none;
+  }
+  .session-heading {
+    min-height: var(--control-height-touch);
+  }
+  .session-heading .icon-button {
+    width: var(--control-height-xl);
+    height: var(--control-height-xl);
+  }
+  .session-row {
+    height: var(--control-height-touch);
+  }
+  .session-row:hover .session-row-select,
+  .session-row:focus-within .session-row-select,
+  .session-row.menu-open .session-row-select,
+  .session-row-select {
+    padding-right: var(--space-20);
+  }
+  .session-actions {
+    top: var(--space-1);
+    right: var(--space-1);
+  }
+  .session-row.has-meta .session-actions {
+    top: var(--space-1-5);
+  }
+  .session-actions > button {
+    width: var(--control-height-lg);
+    height: var(--control-height-lg);
+  }
+  .session-menu {
+    top: var(--space-10);
+    width: var(--menu-width);
+  }
+  .session-menu button {
+    height: var(--control-height-xl);
+  }
+  .compact-session-header {
+    height: calc(var(--mobile-header-height) + env(safe-area-inset-top));
+    gap: var(--space-2);
+    padding: env(safe-area-inset-top) max(var(--space-3), env(safe-area-inset-right)) 0
+      max(var(--space-3), env(safe-area-inset-left));
+  }
+  .compact-session-header h1 {
+    font-size: var(--font-size-md);
+  }
+  .toast-region {
+    top: calc(var(--space-2-5) + env(safe-area-inset-top));
+    right: max(var(--space-2-5), env(safe-area-inset-right));
+    left: max(var(--space-2-5), env(safe-area-inset-left));
+    width: auto;
+  }
+  .compact-session-header + .toast-region {
+    top: calc(var(--space-14) + env(safe-area-inset-top));
+  }
+  .app-toast {
+    min-height: var(--control-height-touch);
+    font-size: var(--font-size-md);
+  }
+  .app-toast strong {
+    font-size: var(--font-size-md);
+  }
+  .app-toast > button {
+    width: var(--control-height-md);
+    height: var(--control-height-md);
+  }
+  .main-placeholder {
+    padding-right: max(var(--space-5), env(safe-area-inset-right));
+    padding-left: max(var(--space-5), env(safe-area-inset-left));
+  }
+  .main-placeholder p {
+    max-width: var(--placeholder-copy-max-width);
+    line-height: var(--line-height-relaxed);
+  }
+  .transcript-inner {
+    width: 100%;
+    padding: var(--space-6) max(var(--space-3-5), env(safe-area-inset-right)) var(--space-10)
+      max(var(--space-3-5), env(safe-area-inset-left));
+  }
+  .message-row {
+    margin-bottom: var(--space-6);
+  }
+  .user-text,
+  .user-images {
+    max-width: 94%;
+  }
+  .user-images img {
+    max-height: var(--media-preview-mobile-max-height);
+  }
+  .markdown-body table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+  }
+  .markdown-body pre,
+  .tool-details pre,
+  .standalone-bash pre {
+    max-width: 100%;
+    padding: var(--space-2-5) var(--space-3);
+    overscroll-behavior-x: contain;
+  }
+  .tool-details {
+    padding-left: var(--space-3);
+  }
+  .tool-header {
+    min-height: var(--control-height-xl);
+  }
+  .composer-wrap,
+  .archived-session-wrap {
+    padding: 0 max(var(--space-2-5), env(safe-area-inset-right)) var(--space-2-5)
+      max(var(--space-2-5), env(safe-area-inset-left));
+  }
+  .archived-session-card {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding: var(--space-3);
+  }
+  .archived-session-card > div {
+    padding-top: var(--space-px);
+  }
+  .archived-session-card button {
+    width: 100%;
+    min-height: var(--control-height-xl);
+  }
+  .composer {
+    border-radius: var(--radius-xl);
+  }
+  .composer textarea {
+    min-height: var(--composer-input-mobile-min-height);
+    max-height: min(var(--composer-input-mobile-max-height), 30dvh);
+    padding: var(--space-3) var(--space-3) var(--space-1-5);
+    font-size: var(--font-size-lg);
+  }
+  .composer-footer {
+    flex-wrap: wrap;
+    gap: var(--space-1);
+    padding: var(--space-1) var(--space-1-5) var(--space-2);
+  }
+  .composer-controls {
+    flex: 1 1 0;
+  }
+  .composer-limit {
+    width: 100%;
+    order: 5;
+    padding-right: var(--space-1);
+    text-align: right;
+  }
+  .composer-attach-button,
+  .composer-select,
+  .context-usage,
+  .send-button,
+  .stop-button {
+    min-height: var(--control-height-lg);
+  }
+  .composer-attach-button,
+  .context-usage,
+  .send-button,
+  .stop-button {
+    width: var(--control-height-lg);
+  }
+  .context-usage-tooltip {
+    right: 0;
+    left: auto;
+    max-width: calc(100vw - var(--space-6));
+    transform: translateY(var(--space-1));
+  }
+  .context-usage:hover .context-usage-tooltip,
+  .context-usage:focus-visible .context-usage-tooltip {
+    transform: translateY(0);
+  }
+  .message-queue-list {
+    max-height: min(var(--composer-queue-mobile-max-height), 28dvh);
+  }
+  .queued-message-editor-meta select,
+  .composer .queued-message-editor textarea,
+  .session-rename-form input,
+  .project-path-form input,
+  .project-folder-filter input {
+    font-size: var(--font-size-lg);
+  }
+  .queued-message-editor-meta select,
+  .queued-save-button,
+  .queued-icon-button {
+    min-height: var(--control-height-lg);
+  }
+  .queued-icon-button {
+    width: var(--control-height-md);
+  }
+  .composer-attachment > button {
+    width: var(--control-height-sm);
+    height: var(--control-height-sm);
+  }
+  .confirm-backdrop,
+  .project-browser-backdrop {
+    place-items: end center;
+    padding: max(var(--space-3), env(safe-area-inset-top))
+      max(var(--space-3), env(safe-area-inset-right))
+      max(var(--space-3), env(safe-area-inset-bottom))
+      max(var(--space-3), env(safe-area-inset-left));
+  }
+  .project-browser-dialog {
+    height: calc(
+      100dvh -
+        max(var(--space-6), env(safe-area-inset-top) + env(safe-area-inset-bottom) + var(--space-6))
+    );
+    min-height: 0;
+    border-radius: var(--radius-xl);
+  }
+  .project-path-form {
+    grid-template-columns: 1fr;
+    gap: var(--space-1);
+  }
+  .project-browser-body {
+    grid-template-columns: 1fr;
+  }
+  .project-browser-places {
+    display: none;
+  }
+  .project-browser-footer {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .project-browser-actions {
+    grid-column: 1;
+    grid-row: auto;
+  }
+  .confirm-dialog-actions button,
+  .project-browser-actions button {
+    min-height: var(--control-height-xl);
+  }
+  .confirm-dialog {
+    padding: var(--space-4) var(--space-4);
+  }
+}
+
+@media (display-mode: standalone) and (max-width: 760px) {
+  .app-shell > .sidebar {
+    height: 100vh;
+  }
+}
+
+@media (max-width: 420px) {
+  .queued-message {
+    grid-template-columns: auto minmax(0, 1fr) var(--control-height-md) var(--control-height-md);
+    gap: var(--space-1);
+    padding-right: var(--space-1);
+    padding-left: var(--space-2);
+  }
+  .slash-command-option {
+    grid-template-columns: 1fr;
+    gap: var(--space-0-5);
+  }
+  .project-browser-header {
+    padding-left: var(--space-3);
+  }
+  .project-browser-actions,
+  .confirm-dialog-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .project-browser-actions button,
+  .confirm-dialog-actions button {
+    width: 100%;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  button,
+  select,
+  input:not([type="hidden"]) {
+    min-height: var(--control-height-touch);
+  }
+  .project-row,
+  .session-row,
+  .archive-header,
+  .sidebar-load-more,
+  .message-queue-header,
+  .project-browser-toolbar {
+    min-height: var(--control-height-touch);
+  }
+  .projects-heading {
+    gap: 0;
+  }
+  .projects-heading > span {
+    margin-right: var(--space-1);
+  }
+  .project-actions {
+    top: 0;
+    right: 0;
+    opacity: 1;
+  }
+  .project-row .project-select {
+    padding-right: calc(var(--control-height-touch) * 2 + var(--space-1));
+  }
+  .session-row-select {
+    padding-right: calc(var(--control-height-touch) * 2 + var(--space-2));
+  }
+  .session-actions,
+  .session-row.has-meta .session-actions {
+    top: 0;
+    right: 0;
+    opacity: 1;
+    transform: none;
+  }
+  .projects-heading button,
+  .project-actions > button,
+  .session-actions > button,
+  .session-rename-form button,
+  .sidebar-toggle,
+  .app-toast > button,
+  .composer-attach-button,
+  .context-usage,
+  .send-button,
+  .stop-button,
+  .queued-icon-button,
+  .project-browser-header > button,
+  .show-hidden-button,
+  .jump-latest {
+    width: var(--control-height-touch);
+    height: var(--control-height-touch);
+  }
+  .project-menu,
+  .session-menu {
+    top: var(--control-height-touch);
+  }
+  .session-row.renaming {
+    height: calc(var(--control-height-touch) + var(--space-2));
+  }
+  .session-rename-form {
+    grid-template-columns: minmax(0, 1fr) var(--control-height-touch) var(--control-height-touch);
+  }
+  .session-rename-form.has-status-dot {
+    grid-template-columns: var(--size-indicator) minmax(0, 1fr) var(--control-height-touch) var(
+        --control-height-touch
+      );
+  }
+  .session-rename-form.has-trailing-indicators {
+    grid-template-columns: minmax(0, 1fr) var(--control-height-touch) var(
+        --control-height-touch
+      ) auto;
+  }
+  .queued-message {
+    grid-template-columns: auto minmax(0, 1fr) var(--control-height-touch) var(
+        --control-height-touch
+      );
+  }
+  .composer-select,
+  .context-usage {
+    min-height: var(--control-height-touch);
+  }
+  .project-path-form input,
+  .project-folder-filter input {
+    height: var(--control-height-touch);
+  }
+  .project-browser-toolbar {
+    height: auto;
+  }
+}

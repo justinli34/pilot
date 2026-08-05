@@ -1,0 +1,13 @@
+.spin {
+  animation: spin var(--duration-spin) linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes pulse {
+  50% {
+    opacity: 0.55;
+  }
+}

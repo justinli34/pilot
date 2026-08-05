@@ -1,0 +1,218 @@
+:root {
+  /* Typography */
+  --font-family-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-family-mono: "SFMono-Regular", Consolas, "Liberation Mono", ui-monospace, monospace;
+  --font-size-sm: 12px;
+  --font-size-md: 14px;
+  --font-size-lg: 16px;
+  --font-size-xl: 18px;
+  --font-size-2xl: 20px;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 650;
+  --line-height-tight: 1.2;
+  --line-height-heading: 1.32;
+  --line-height-compact: 1.4;
+  --line-height-relaxed: 1.5;
+  --line-height-body: 1.6;
+  --line-height-prose: 1.67;
+
+  /* Spacing — based on a 4px grid, with half steps for compact controls. */
+  --space-px: 1px;
+  --space-0-5: 2px;
+  --space-1: 4px;
+  --space-1-5: 6px;
+  --space-2: 8px;
+  --space-2-5: 10px;
+  --space-3: 12px;
+  --space-3-5: 14px;
+  --space-4: 16px;
+  --space-4-5: 18px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-14: 56px;
+  --space-16: 64px;
+  --space-20: 80px;
+
+  /* Shape and borders */
+  --border-width: 1px;
+  --border-width-emphasis: 2px;
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 12px;
+  --radius-round: 50%;
+
+  /* Neutral surfaces */
+  --color-bg-canvas: #0b0c0f;
+  --color-bg-sidebar: #0e0f12;
+  --color-bg-inset-deep: #0f1014;
+  --color-bg-inset: #101116;
+  --color-bg-code: #0d0e11;
+  --color-bg-surface: #121318;
+  --color-bg-dialog: #15161b;
+  --color-bg-raised: #17181d;
+  --color-bg-popover: #191a1f;
+  --color-bg-hover: #1a1b21;
+  --color-bg-active: #282a31;
+  --color-bg-glass: rgba(24, 25, 30, 0.96);
+  --color-bg-inset-overlay: rgba(16, 17, 22, 0.94);
+  --color-bg-inset-overlay-subtle: rgba(16, 17, 22, 0.82);
+  --color-bg-backdrop: rgba(5, 6, 8, 0.72);
+  --color-bg-hover-subtle: rgba(255, 255, 255, 0.03);
+  --color-mask-opaque: #000;
+
+  /* Borders */
+  --color-border-subtle: #1c1e23;
+  --color-border-default: #24262c;
+  --color-border-strong: #32343c;
+  --color-border-emphasis: #454853;
+
+  /* Text */
+  --color-text-primary: #f1f2f4;
+  --color-text-strong: #dedfe4;
+  --color-text-default: #c8cad0;
+  --color-text-secondary: #b8bac2;
+  --color-text-muted: #999ca5;
+  --color-text-subtle: #7d8089;
+  --color-text-disabled: #656872;
+  --color-text-on-emphasis: #fff;
+
+  /* Brand and interaction */
+  --color-accent: #6c72e8;
+  --color-accent-hover: #7b80ee;
+  --color-accent-border: #777cf0;
+  --color-accent-surface: rgba(108, 114, 232, 0.14);
+  --color-accent-surface-hover: rgba(108, 114, 232, 0.22);
+  --color-accent-border-subtle: rgba(108, 114, 232, 0.36);
+  --color-accent-text: #b7bafe;
+  --color-accent-text-muted: #989df3;
+
+  /* Status */
+  --color-info: #4ea7fc;
+  --color-info-text: #82b9ee;
+  --color-info-border: rgba(78, 167, 252, 0.35);
+  --color-success: #4cb782;
+  --color-success-text: #71b99a;
+  --color-success-text-muted: #bfd1c7;
+  --color-success-border: #29352f;
+  --color-warning: #d6a84b;
+  --color-warning-text: #c0a66e;
+  --color-warning-surface: rgba(214, 168, 75, 0.08);
+  --color-warning-border: rgba(214, 168, 75, 0.24);
+  --color-danger: #e66a6a;
+  --color-danger-text: #df8989;
+  --color-danger-text-strong: #ef9090;
+  --color-danger-surface: rgba(230, 106, 106, 0.08);
+  --color-danger-surface-hover: rgba(230, 106, 106, 0.14);
+  --color-danger-border: rgba(230, 106, 106, 0.28);
+  --color-danger-button: #9f4545;
+  --color-danger-button-hover: #b44f4f;
+
+  /* Controls and layout */
+  --control-height-xs: 24px;
+  --control-height-sm: 28px;
+  --control-height-md: 32px;
+  --control-height-lg: 36px;
+  --control-height-xl: 40px;
+  --control-height-touch: 44px;
+  --size-icon-sm: 18px;
+  --size-indicator: 6px;
+  --size-thumbnail: 42px;
+  --session-row-height: var(--control-height-lg);
+  --session-row-meta-height: var(--space-12);
+  --layout-app-min-width: 720px;
+  --content-max-width: 800px;
+  --sidebar-width-min: 220px;
+  --sidebar-width-default: 300px;
+  --sidebar-width-max: 500px;
+  --sidebar-resize-step: 8px;
+  --is-mobile-viewport: 0;
+  --drawer-width: 320px;
+  --toast-max-width: 360px;
+  --dialog-max-width: 392px;
+  --project-dialog-max-width: 784px;
+
+  /* Component geometry */
+  --menu-width: 160px;
+  --menu-width-wide: 168px;
+  --composer-queue-max-height: 240px;
+  --composer-queue-mobile-max-height: 192px;
+  --composer-attachments-max-height: 120px;
+  --composer-attachment-width: 128px;
+  --composer-input-min-height: 48px;
+  --composer-input-max-height: 224px;
+  --composer-input-mobile-min-height: 52px;
+  --composer-input-mobile-max-height: 180px;
+  --queued-editor-min-height: 64px;
+  --queued-editor-max-height: 144px;
+  --command-menu-max-height: 288px;
+  --floating-copy-max-width: 320px;
+  --placeholder-copy-max-width: 320px;
+  --mobile-header-height: 48px;
+  --empty-state-min-height: 208px;
+  --empty-state-copy-max-width: 192px;
+  --project-dialog-height: 608px;
+  --project-dialog-min-height: 416px;
+  --project-dialog-header-height: 52px;
+  --project-places-width: 168px;
+  --project-state-min-height: 96px;
+  --project-footer-min-height: 72px;
+  --transcript-row-estimated-height: 128px;
+  --media-preview-max-height: 360px;
+  --media-preview-mobile-max-height: 280px;
+  --media-thumbnail-width: 176px;
+  --media-thumbnail-height: 144px;
+  --thinking-panel-max-height: 360px;
+  --tool-output-max-height: 384px;
+  --patch-output-max-height: 512px;
+  --bash-row-estimated-height: 120px;
+  --notice-row-estimated-height: 80px;
+
+  /* Elevation */
+  --shadow-composer: 0 10px 30px rgba(0, 0, 0, 0.22);
+  --shadow-composer-focus: 0 10px 30px rgba(0, 0, 0, 0.27);
+  --shadow-floating: 0 8px 24px rgba(0, 0, 0, 0.34);
+  --shadow-popover: 0 12px 28px rgba(0, 0, 0, 0.4);
+  --shadow-toast: 0 12px 32px rgba(0, 0, 0, 0.36);
+  --shadow-drawer: 18px 0 44px rgba(0, 0, 0, 0.44);
+  --shadow-dialog: 0 20px 55px rgba(0, 0, 0, 0.55);
+  --shadow-dialog-lg: 0 22px 60px rgba(0, 0, 0, 0.6);
+  --shadow-accent: 0 2px 8px rgba(108, 114, 232, 0.2);
+  --shadow-danger-ring: 0 0 0 3px rgba(230, 106, 106, 0.1);
+  --blur-xs: 1px;
+  --blur-sm: 5px;
+  --blur-md: 10px;
+  --blur-lg: 14px;
+
+  /* Motion */
+  --duration-instant: 100ms;
+  --duration-fast: 120ms;
+  --duration-normal: 140ms;
+  --duration-moderate: 150ms;
+  --duration-slow: 180ms;
+  --duration-spin: 850ms;
+  --ease-standard: ease;
+
+  /* Layering */
+  --z-base: 1;
+  --z-content: 2;
+  --z-header: 6;
+  --z-composer: 8;
+  --z-sidebar: 10;
+  --z-sticky: 12;
+  --z-raised: 20;
+  --z-menu: 35;
+  --z-toast: 40;
+  --z-backdrop: 50;
+  --z-popover: 50;
+  --z-drawer: 60;
+  --z-drag-overlay: 70;
+  --z-dialog: 100;
+}
