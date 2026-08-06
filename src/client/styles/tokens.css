@@ -119,6 +119,9 @@
   --control-height-xl: 40px;
   --control-height-touch: 44px;
   --size-icon-sm: 18px;
+  --size-icon-lucide-xs: 13px;
+  --size-icon-lucide-sm: 15px;
+  --size-icon-lucide-md: 17px;
   --size-indicator: 6px;
   --size-thumbnail: 42px;
   --session-row-height: var(--control-height-lg);
@@ -160,6 +163,7 @@
   --project-places-width: 168px;
   --project-state-min-height: 96px;
   --project-footer-min-height: 72px;
+  --archive-browser-project-mobile-max-width: 55%;
   --transcript-row-estimated-height: 128px;
   --media-preview-max-height: 360px;
   --media-preview-mobile-max-height: 280px;

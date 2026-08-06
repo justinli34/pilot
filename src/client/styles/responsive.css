@@ -263,7 +263,8 @@
   .composer .queued-message-editor textarea,
   .session-rename-form input,
   .project-path-form input,
-  .project-folder-filter input {
+  .project-folder-filter input,
+  .archive-browser-filter input {
     font-size: var(--font-size-lg);
   }
   .queued-message-editor-meta select,
@@ -279,14 +280,16 @@
     height: var(--control-height-sm);
   }
   .confirm-backdrop,
-  .project-browser-backdrop {
+  .project-browser-backdrop,
+  .archive-browser-backdrop {
     place-items: end center;
     padding: max(var(--space-3), env(safe-area-inset-top))
       max(var(--space-3), env(safe-area-inset-right))
       max(var(--space-3), env(safe-area-inset-bottom))
       max(var(--space-3), env(safe-area-inset-left));
   }
-  .project-browser-dialog {
+  .project-browser-dialog,
+  .archive-browser-dialog {
     height: calc(
       100dvh -
         max(var(--space-6), env(safe-area-inset-top) + env(safe-area-inset-bottom) + var(--space-6))
@@ -303,6 +306,27 @@
   }
   .project-browser-places {
     display: none;
+  }
+  .archive-browser-body {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+  .archive-browser-projects {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: var(--space-1);
+    padding: var(--space-2);
+    border-right: 0;
+    border-bottom: var(--border-width) solid var(--color-border-subtle);
+  }
+  .archive-browser-projects-heading {
+    display: none;
+  }
+  .archive-browser-projects button {
+    width: auto;
+    max-width: var(--archive-browser-project-mobile-max-width);
+    flex: 0 0 auto;
   }
   .project-browser-footer {
     grid-template-columns: minmax(0, 1fr);
@@ -337,7 +361,8 @@
     grid-template-columns: 1fr;
     gap: var(--space-0-5);
   }
-  .project-browser-header {
+  .project-browser-header,
+  .archive-browser-header {
     padding-left: var(--space-3);
   }
   .project-browser-actions,
@@ -400,6 +425,7 @@
   .stop-button,
   .queued-icon-button,
   .project-browser-header > button,
+  .archive-browser-header > button,
   .show-hidden-button,
   .jump-latest {
     width: var(--control-height-touch);
@@ -435,7 +461,8 @@
     min-height: var(--control-height-touch);
   }
   .project-path-form input,
-  .project-folder-filter input {
+  .project-folder-filter input,
+  .archive-browser-filter input {
     height: var(--control-height-touch);
   }
   .project-browser-toolbar {

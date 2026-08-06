@@ -21,6 +21,8 @@ interface SidebarSessionRowProps {
   session: SessionSummary;
   project?: ProjectSummary;
   showProject: boolean;
+  showArchiveState?: boolean;
+  showCreatedAt?: boolean;
   selected: boolean;
   unread: boolean;
   mutatingSessionId?: string;
@@ -44,10 +46,32 @@ function sessionStateLabel(session: SessionSummary): string {
   return "Idle";
 }
 
+export function relativeDate(value: string, now = Date.now()): string | undefined {
+  const timestamp = Date.parse(value);
+  if (Number.isNaN(timestamp)) return undefined;
+  const elapsed = Math.max(0, now - timestamp);
+  const units: Array<[number, string]> = [
+    [365 * 24 * 60 * 60 * 1000, "y"],
+    [30 * 24 * 60 * 60 * 1000, "mo"],
+    [7 * 24 * 60 * 60 * 1000, "w"],
+    [24 * 60 * 60 * 1000, "d"],
+    [60 * 60 * 1000, "h"],
+    [60 * 1000, "m"],
+  ];
+  const unit = units.find(([milliseconds]) => elapsed >= milliseconds);
+  return unit ? `${Math.floor(elapsed / unit[0])}${unit[1]}` : "now";
+}
+
+export function createdAtLabel(relativeDate: string): string {
+  return relativeDate === "now" ? "Created just now" : `Created ${relativeDate} ago`;
+}
+
 export const SidebarSessionRow = memo(function SidebarSessionRow({
   session,
   project,
   showProject,
+  showArchiveState = true,
+  showCreatedAt = false,
   selected,
   unread,
   mutatingSessionId,
@@ -66,8 +90,12 @@ export const SidebarSessionRow = memo(function SidebarSessionRow({
   const showUnreadIndicator = unread && !selected && !showErrorIndicator;
   const showRunningIndicator = session.status === "running";
   const showTrailingIndicators = showRunningIndicator || showUnreadIndicator;
+  const createdAt = showCreatedAt ? relativeDate(session.createdAt) : undefined;
   const hasMeta =
-    (showProject && project !== undefined) || session.archived || session.status === "error";
+    (showProject && project !== undefined) ||
+    (showArchiveState && session.archived) ||
+    createdAt !== undefined ||
+    session.status === "error";
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -200,14 +228,23 @@ export const SidebarSessionRow = memo(function SidebarSessionRow({
                   {showProject && project && (
                     <span className="session-project-name">{project.name}</span>
                   )}
-                  {session.archived && (
+                  {showArchiveState && session.archived && (
                     <span className="session-archive-state">
                       {showProject && project ? "· Archived" : "Archived"}
                     </span>
                   )}
+                  {createdAt !== undefined && (
+                    <span
+                      className="session-created-at"
+                      title={`Created ${new Date(session.createdAt).toLocaleString()}`}
+                    >
+                      {createdAtLabel(createdAt)}
+                    </span>
+                  )}
                   {session.status === "error" && (
                     <span className="session-error-state">
-                      {(showProject && project !== undefined) || session.archived
+                      {(showProject && project !== undefined) ||
+                      (showArchiveState && session.archived)
                         ? "· Error"
                         : "Error"}
                     </span>

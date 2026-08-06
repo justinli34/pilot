@@ -1,17 +1,9 @@
-import {
-  Archive,
-  ChevronRight,
-  FolderPlus,
-  LoaderCircle,
-  PanelLeftClose,
-  Plus,
-  Search,
-  X,
-} from "lucide-react";
+import { Archive, FolderPlus, LoaderCircle, PanelLeftClose, Plus, Search, X } from "lucide-react";
 import { memo, useEffect, useRef, useState } from "react";
 
 import type { ProjectSummary, SessionSummary } from "../../shared/protocol.js";
 import { useSidebarResize } from "../use-sidebar-resize.js";
+import { ArchiveBrowserDialog } from "./ArchiveBrowserDialog.js";
 import { ModalDialog } from "./ModalDialog.js";
 import { SidebarProjectSection } from "./SidebarProjectSection.js";
 import { SidebarSessionRow } from "./SidebarSessionRow.js";
@@ -116,7 +108,7 @@ function ConfirmDialog({
 
 export const Sidebar = memo(function Sidebar(props: SidebarProps) {
   const [collapsedProjects, setCollapsedProjects] = useState(initialCollapsedProjects);
-  const [archiveExpanded, setArchiveExpanded] = useState(false);
+  const [archiveBrowserOpen, setArchiveBrowserOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [deleteCandidate, setDeleteCandidate] = useState<SessionSummary>();
   const [dialogError, setDialogError] = useState<string>();
@@ -133,7 +125,7 @@ export const Sidebar = memo(function Sidebar(props: SidebarProps) {
   const projectsById = new Map(props.projects.map((project) => [project.id, project]));
   const normalizedSearch = searchQuery.trim().toLocaleLowerCase();
   const searchResults = normalizedSearch
-    ? props.sessions.filter((session) => {
+    ? activeSessions.filter((session) => {
         const project = projectsById.get(session.projectId);
         return [session.name, session.firstMessage, project?.name, project?.path].some((value) =>
           value?.toLocaleLowerCase().includes(normalizedSearch),
@@ -214,7 +206,7 @@ export const Sidebar = memo(function Sidebar(props: SidebarProps) {
         </button>
       </div>
 
-      {(props.sessions.length > 0 || searchQuery.length > 0) && (
+      {(activeSessions.length > 0 || searchQuery.length > 0) && (
         <div className="sidebar-search">
           <Search aria-hidden="true" size={14} />
           <input
@@ -304,25 +296,15 @@ export const Sidebar = memo(function Sidebar(props: SidebarProps) {
       </div>
 
       {!normalizedSearch && (
-        <section className={`archive-section${archiveExpanded ? " expanded" : ""}`}>
+        <section className="archive-section">
           <button
             className="archive-header"
             type="button"
-            aria-expanded={archiveExpanded}
-            onClick={() => setArchiveExpanded((expanded) => !expanded)}
+            aria-haspopup="dialog"
+            onClick={() => setArchiveBrowserOpen(true)}
           >
-            <ChevronRight className={archiveExpanded ? "expanded" : ""} size={14} />
             <Archive aria-hidden="true" size={14} /> <span>Archived</span>
           </button>
-          {archiveExpanded && (
-            <nav className="archived-session-list" aria-label="Archived sessions">
-              {archivedSessions.length === 0 ? (
-                <div className="project-sessions-empty">No archived sessions</div>
-              ) : (
-                archivedSessions.map((session) => renderSession(session, true))
-              )}
-            </nav>
-          )}
         </section>
       )}
 
@@ -339,6 +321,21 @@ export const Sidebar = memo(function Sidebar(props: SidebarProps) {
         onPointerDown={beginResize}
         onKeyDown={resizeWithKeyboard}
       />
+
+      {archiveBrowserOpen && (
+        <ArchiveBrowserDialog
+          projects={props.projects}
+          sessions={archivedSessions}
+          selectedSessionId={props.selectedSessionId}
+          mutatingSessionId={props.mutatingSessionId}
+          archivingProjectId={props.archivingProjectId}
+          onClose={() => setArchiveBrowserOpen(false)}
+          onSelect={props.onSelectSession}
+          onRename={props.onRenameSession}
+          onSetArchived={props.onSetSessionArchived}
+          onRequestDelete={requestDelete}
+        />
+      )}
 
       {deleteCandidate && (
         <ConfirmDialog

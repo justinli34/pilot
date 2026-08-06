@@ -160,7 +160,7 @@ Use the paperclip button, paste files into the composer, or drag them onto it. P
 
 ## Manage sessions
 
-Hover or focus a session in the sidebar and open its actions menu to rename, archive, or delete it. Every project's archived sessions move into the single **Archived** section at the bottom. Archived rows retain their project identity and remain available to read; restore one before continuing its conversation. Archive state is stored as Pilot metadata in the Pi JSONL transcript. A running session must be stopped before it can be archived or deleted. Deletion is permanent and removes the transcript after confirmation.
+Hover or focus a session in the sidebar and open its actions menu to rename, archive, or delete it. The sidebar search covers active sessions only. Archived sessions are available through the **Archived** button at the bottom, which opens a searchable dialog with a project selector. Archived sessions remain available to read; restore one before continuing its conversation. Archive state is stored as Pilot metadata in the Pi JSONL transcript. A running session must be stopped before it can be archived or deleted. Deletion is permanent and removes the transcript after confirmation.
 
 ## Validation
 
