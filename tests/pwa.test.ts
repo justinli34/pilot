@@ -43,7 +43,24 @@ describe("progressive web app", () => {
     expect(source).toContain("PRECACHE_PATHS.has(url.pathname)");
   });
 
-  it("works around the iOS standalone viewport without adding bottom clearance", async () => {
+  it("disables viewport zoom and limits text selection to readable and editable text", async () => {
+    const [page, base, responsive] = await Promise.all([
+      readFile(join(root, "index.html"), "utf8"),
+      readFile(join(root, "src", "client", "styles", "base.css"), "utf8"),
+      readFile(join(root, "src", "client", "styles", "responsive.css"), "utf8"),
+    ]);
+
+    expect(page).toContain("maximum-scale=1, user-scalable=no");
+    expect(base).toMatch(
+      /body \{[\s\S]*touch-action: pan-x pan-y;[\s\S]*-webkit-user-select: none;[\s\S]*user-select: none;/,
+    );
+    expect(base).toMatch(
+      /\.transcript,\s+textarea,\s+input \{\s+-webkit-user-select: text;\s+user-select: text;/,
+    );
+    expect(responsive).not.toContain("pinch-zoom");
+  });
+
+  it("keeps standalone controls inside the iOS safe area", async () => {
     const [page, base, responsive] = await Promise.all([
       readFile(join(root, "index.html"), "utf8"),
       readFile(join(root, "src", "client", "styles", "base.css"), "utf8"),
@@ -58,16 +75,17 @@ describe("progressive web app", () => {
     expect(base).toMatch(
       /@media \(display-mode: standalone\)[\s\S]*html,[\s\S]*#root[\s\S]*height: 100vh;/,
     );
-    expect(responsive)
-      .toContain(`padding: 0 max(var(--space-2-5), env(safe-area-inset-right)) var(--space-2-5)
+    expect(responsive).toContain(`padding: 0 max(var(--space-2-5), env(safe-area-inset-right))
+      max(var(--space-2-5), env(safe-area-inset-bottom))
       max(var(--space-2-5), env(safe-area-inset-left))`);
     expect(responsive).toMatch(/\.project-tree \{\s+padding-bottom: 0;/);
-    expect(responsive).toMatch(/\.archive-section \{\s+padding-bottom: var\(--space-2\);/);
+    expect(responsive).toMatch(
+      /\.archive-section \{\s+padding-bottom: max\(var\(--space-2-5\), env\(safe-area-inset-bottom\)\);/,
+    );
     const standaloneMobile = responsive.slice(
       responsive.indexOf("@media (display-mode: standalone)"),
       responsive.indexOf("@media (max-width: 420px)"),
     );
     expect(standaloneMobile).toContain("height: 100vh");
-    expect(standaloneMobile).not.toContain("safe-area-inset-bottom");
   });
 });

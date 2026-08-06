@@ -44,7 +44,7 @@
     padding-bottom: 0;
   }
   .archive-section {
-    padding-bottom: var(--space-2);
+    padding-bottom: max(var(--space-2-5), env(safe-area-inset-bottom));
   }
   @supports (height: 100dvh) {
     .app-shell > .sidebar {
@@ -58,7 +58,7 @@
   .app-shell > .sidebar,
   .mobile-sidebar-backdrop,
   .mobile-sidebar-swipe-edge {
-    touch-action: pan-y pinch-zoom;
+    touch-action: pan-y;
   }
   .mobile-sidebar-backdrop {
     position: fixed;
@@ -195,7 +195,8 @@
   }
   .composer-wrap,
   .archived-session-wrap {
-    padding: 0 max(var(--space-2-5), env(safe-area-inset-right)) var(--space-2-5)
+    padding: 0 max(var(--space-2-5), env(safe-area-inset-right))
+      max(var(--space-2-5), env(safe-area-inset-bottom))
       max(var(--space-2-5), env(safe-area-inset-left));
   }
   .archived-session-card {

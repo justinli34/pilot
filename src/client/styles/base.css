@@ -40,6 +40,9 @@ body {
   overscroll-behavior: none;
   background: var(--color-bg-canvas);
   font-size: var(--font-size-md);
+  touch-action: pan-x pan-y;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 body.resizing-sidebar {
@@ -52,6 +55,13 @@ select,
 textarea,
 input {
   font: inherit;
+}
+
+.transcript,
+textarea,
+input {
+  -webkit-user-select: text;
+  user-select: text;
 }
 
 button,
