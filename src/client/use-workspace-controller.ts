@@ -11,7 +11,6 @@ import {
   renameSession as renameSessionRequest,
   setSessionArchived as setSessionArchivedRequest,
 } from "./api.js";
-import { rememberProjectPath } from "./components/ProjectBrowserDialog.js";
 import { forgetSessionSnapshot, useSessionSocket } from "./use-session-socket.js";
 import { useWorkspaceSessions } from "./use-workspace-sessions.js";
 
@@ -191,7 +190,6 @@ export function useWorkspaceController({ closeMobileNavigation }: WorkspaceContr
         setProjects((current) => sortProjects([...current, project]));
         setSelectedProjectId(project.id);
         setSelectedSessionId(undefined);
-        rememberProjectPath(project.path);
         setProjectBrowserOpen(false);
         closeMobileNavigation();
         setActionError(undefined);

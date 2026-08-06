@@ -297,10 +297,6 @@
     min-height: 0;
     border-radius: var(--radius-xl);
   }
-  .project-path-form {
-    grid-template-columns: 1fr;
-    gap: var(--space-1);
-  }
   .project-browser-body {
     grid-template-columns: 1fr;
   }
@@ -385,8 +381,7 @@
   .project-row,
   .session-row,
   .archive-header,
-  .message-queue-header,
-  .project-browser-toolbar {
+  .message-queue-header {
     min-height: var(--control-height-touch);
   }
   .projects-heading {
@@ -462,10 +457,8 @@
   }
   .project-path-form input,
   .project-folder-filter input,
+  .project-folder-filter .show-hidden-button,
   .archive-browser-filter input {
     height: var(--control-height-touch);
-  }
-  .project-browser-toolbar {
-    height: auto;
   }
 }

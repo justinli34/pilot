@@ -1,60 +1,15 @@
-import {
-  ArrowUp,
-  Clock3,
-  Eye,
-  EyeOff,
-  Folder,
-  FolderOpen,
-  HardDrive,
-  Home,
-  Link,
-  LoaderCircle,
-  X,
-} from "lucide-react";
+import { ArrowUp, Eye, EyeOff, Folder, HardDrive, Home, Link, LoaderCircle, X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 
 import type { DirectoryListing } from "../../shared/protocol.js";
 import { browseDirectories } from "../api.js";
 import { ModalDialog } from "./ModalDialog.js";
 
-const RECENT_PROJECT_PATHS_KEY = "pilot.recentProjectPaths";
-
 interface ProjectBrowserDialogProps {
   adding: boolean;
   error?: string;
   onClose: () => void;
   onAdd: (path: string) => Promise<void>;
-}
-
-function recentPaths(): string[] {
-  try {
-    const value: unknown = JSON.parse(localStorage.getItem(RECENT_PROJECT_PATHS_KEY) ?? "[]");
-    return Array.isArray(value) && value.every((path) => typeof path === "string")
-      ? value.slice(0, 6)
-      : [];
-  } catch {
-    return [];
-  }
-}
-
-export function rememberProjectPath(path: string): void {
-  localStorage.setItem(
-    RECENT_PROJECT_PATHS_KEY,
-    JSON.stringify([path, ...recentPaths().filter((candidate) => candidate !== path)].slice(0, 6)),
-  );
-}
-
-function breadcrumbs(listing: DirectoryListing): Array<{ label: string; path: string }> {
-  const separator = listing.root.includes("\\") ? "\\" : "/";
-  const remainder = listing.path.slice(listing.root.length);
-  const parts = remainder.split(/[\\/]/).filter(Boolean);
-  const result = [{ label: listing.root, path: listing.root }];
-  let current = listing.root;
-  for (const part of parts) {
-    current = `${current}${current.endsWith(separator) ? "" : separator}${part}`;
-    result.push({ label: part, path: current });
-  }
-  return result;
 }
 
 export function ProjectBrowserDialog({ adding, error, onClose, onAdd }: ProjectBrowserDialogProps) {
@@ -67,7 +22,6 @@ export function ProjectBrowserDialog({ adding, error, onClose, onAdd }: ProjectB
   const [browseError, setBrowseError] = useState<string>();
   const [pathError, setPathError] = useState<string>();
   const [pathSubmitting, setPathSubmitting] = useState(false);
-  const [recents] = useState(recentPaths);
   const navigation = useRef<AbortController | undefined>(undefined);
 
   const open = async (path?: string) => {
@@ -129,9 +83,6 @@ export function ProjectBrowserDialog({ adding, error, onClose, onAdd }: ProjectB
       onClose={onClose}
     >
       <header className="project-browser-header">
-        <span className="project-browser-mark" aria-hidden="true">
-          <FolderOpen size={17} />
-        </span>
         <h2 id="project-browser-title">Add project</h2>
         <button
           type="button"
@@ -143,38 +94,6 @@ export function ProjectBrowserDialog({ adding, error, onClose, onAdd }: ProjectB
           <X size={17} />
         </button>
       </header>
-
-      <form className="project-path-form" onSubmit={submitPath}>
-        <label htmlFor="project-path-input">Server path</label>
-        <div className="project-path-field">
-          <div className="project-path-controls">
-            <input
-              id="project-path-input"
-              name="projectPath"
-              value={pathInput}
-              placeholder="/home/you/project…"
-              autoComplete="off"
-              spellCheck={false}
-              aria-invalid={pathError ? true : undefined}
-              aria-describedby={pathError ? "project-path-error" : undefined}
-              disabled={adding}
-              onChange={(event) => {
-                setPathInput(event.target.value);
-                if (pathError) setPathError(undefined);
-              }}
-            />
-            <button type="submit" disabled={adding || pathSubmitting} aria-busy={pathSubmitting}>
-              {pathSubmitting && <LoaderCircle className="spin" aria-hidden="true" size={13} />}
-              Go
-            </button>
-          </div>
-          {pathError && (
-            <span id="project-path-error" className="project-path-error" role="alert">
-              {pathError}
-            </span>
-          )}
-        </div>
-      </form>
 
       <div className="project-browser-body">
         <aside className="project-browser-places" aria-label="Quick access">
@@ -193,48 +112,44 @@ export function ProjectBrowserDialog({ adding, error, onClose, onAdd }: ProjectB
           >
             <HardDrive size={15} /> Filesystem
           </button>
-          {recents.length > 0 && (
-            <div className="project-browser-places-heading recent">Recent</div>
-          )}
-          {recents.map((path) => (
-            <button
-              type="button"
-              title={path}
-              key={path}
-              disabled={adding}
-              onClick={() => void open(path)}
-            >
-              <Clock3 size={14} /> <span>{path.split(/[\\/]/).filter(Boolean).at(-1) ?? path}</span>
-            </button>
-          ))}
         </aside>
 
         <section className="project-browser-main">
-          <div className="project-browser-toolbar">
-            <div className="project-breadcrumbs" aria-label="Current folder">
-              {listing &&
-                breadcrumbs(listing).map((crumb) => (
-                  <button
-                    type="button"
-                    key={crumb.path}
-                    title={crumb.path}
-                    disabled={adding}
-                    onClick={() => void open(crumb.path)}
-                  >
-                    {crumb.label}
-                  </button>
-                ))}
+          <form className="project-path-form" onSubmit={submitPath}>
+            <div className="project-path-field">
+              <div className="project-path-controls">
+                <input
+                  id="project-path-input"
+                  name="projectPath"
+                  aria-label="Path"
+                  value={pathInput}
+                  placeholder="/home/you/project…"
+                  autoComplete="off"
+                  spellCheck={false}
+                  aria-invalid={pathError ? true : undefined}
+                  aria-describedby={pathError ? "project-path-error" : undefined}
+                  disabled={adding}
+                  onChange={(event) => {
+                    setPathInput(event.target.value);
+                    if (pathError) setPathError(undefined);
+                  }}
+                />
+                <button
+                  type="submit"
+                  disabled={adding || pathSubmitting}
+                  aria-busy={pathSubmitting}
+                >
+                  {pathSubmitting && <LoaderCircle className="spin" aria-hidden="true" size={13} />}
+                  Go
+                </button>
+              </div>
+              {pathError && (
+                <span id="project-path-error" className="project-path-error" role="alert">
+                  {pathError}
+                </span>
+              )}
             </div>
-            <button
-              className="show-hidden-button"
-              type="button"
-              aria-pressed={showHidden}
-              title={showHidden ? "Hide hidden folders" : "Show hidden folders"}
-              onClick={() => setShowHidden((visible) => !visible)}
-            >
-              {showHidden ? <EyeOff size={15} /> : <Eye size={15} />}
-            </button>
-          </div>
+          </form>
           <div className="project-folder-filter">
             <input
               value={filter}
@@ -246,6 +161,15 @@ export function ProjectBrowserDialog({ adding, error, onClose, onAdd }: ProjectB
               disabled={!listing || adding}
               onChange={(event) => setFilter(event.target.value)}
             />
+            <button
+              className="show-hidden-button"
+              type="button"
+              aria-pressed={showHidden}
+              title={showHidden ? "Hide hidden folders" : "Show hidden folders"}
+              onClick={() => setShowHidden((visible) => !visible)}
+            >
+              {showHidden ? <EyeOff size={15} /> : <Eye size={15} />}
+            </button>
           </div>
           <div className="project-folder-list" role="group" aria-label="Server folders">
             {loading && (
