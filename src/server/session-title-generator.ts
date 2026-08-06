@@ -65,13 +65,8 @@ export function conversationForTitle(messages: readonly unknown[]): TitleConvers
   return undefined;
 }
 
-function takeCharacters(value: string, maximum: number): string {
-  const characters = Array.from(value);
-  return characters.length <= maximum ? value : characters.slice(0, maximum).join("").trimEnd();
-}
-
 /** Normalize model output into a plain, bounded Pi session name. */
-export function sanitizeGeneratedTitle(value: string, maxCharacters: number): string {
+export function sanitizeGeneratedTitle(value: string): string {
   const firstLine = value
     .replace(/\r\n?/g, "\n")
     .split("\n")
@@ -102,8 +97,7 @@ export function sanitizeGeneratedTitle(value: string, maxCharacters: number): st
     }
   }
 
-  title = truncateUtf8(title, MAX_SESSION_NAME_BYTES, "");
-  return takeCharacters(title, maxCharacters);
+  return truncateUtf8(title, MAX_SESSION_NAME_BYTES, "");
 }
 
 function responseText(response: Awaited<ReturnType<ModelRuntime["completeSimple"]>>): string {
@@ -161,7 +155,7 @@ export class SessionTitleGenerator {
     if (response.stopReason === "error" || response.stopReason === "aborted") {
       throw new Error(response.errorMessage ?? `Session title request ${response.stopReason}`);
     }
-    const title = sanitizeGeneratedTitle(responseText(response), this.options.maxCharacters);
+    const title = sanitizeGeneratedTitle(responseText(response));
     if (!title) throw new Error("Session title model returned an empty title");
     return title;
   }

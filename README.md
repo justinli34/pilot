@@ -84,7 +84,7 @@ Pilot generates a title as soon as a session's first user message is submitted. 
 }
 ```
 
-`maxCharacters` is optional and defaults to `30`. The generated title never replaces an existing or manually assigned session name. Title requests from different sessions may run concurrently without a global limit. Failures are logged and leave the normal first-message fallback unchanged. Set `enabled` to `false`, or omit the section, to disable title generation.
+`maxCharacters` is optional and defaults to `30`. It is a generation target sent to the model; Pilot does not truncate the model's title to that length. The generated title never replaces an existing or manually assigned session name. Title requests from different sessions may run concurrently without a global limit. Failures are logged and leave the normal first-message fallback unchanged. Set `enabled` to `false`, or omit the section, to disable title generation.
 
 Projects are not configured in this file. Add individual server folders from Pilot's sidebar. Pilot persists that managed list in `projects.json` next to `config.json`; removing a project from Pilot never deletes its folder or Pi sessions.
 

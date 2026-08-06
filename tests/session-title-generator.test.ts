@@ -37,13 +37,12 @@ describe("session title generation", () => {
     ).toEqual({ user: "Implement title generation" });
   });
 
-  it("normalizes wrappers and enforces the character limit", () => {
+  it("normalizes wrappers without truncating to the requested character target", () => {
     const title = sanitizeGeneratedTitle(
       'Title: "Implement automatic session title generation"\nExtra explanation',
-      30,
     );
-    expect(title).toBe("Implement automatic session ti");
-    expect(Array.from(title)).toHaveLength(30);
+    expect(title).toBe("Implement automatic session title generation");
+    expect(Array.from(title).length).toBeGreaterThan(30);
   });
 
   it("uses the configured model through ModelRuntime.completeSimple", async () => {
