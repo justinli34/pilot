@@ -1,5 +1,5 @@
 import { Archive, FolderPlus, LoaderCircle, PanelLeftClose, Plus, Search, X } from "lucide-react";
-import { memo, useEffect, useRef, useState } from "react";
+import { memo, useEffect, useState } from "react";
 
 import type { ProjectSummary, SessionSummary } from "../../shared/protocol.js";
 import { useSidebarResize } from "../use-sidebar-resize.js";
@@ -67,8 +67,6 @@ function ConfirmDialog({
   onCancel,
   onConfirm,
 }: ConfirmDialogProps) {
-  const cancelButton = useRef<HTMLButtonElement>(null);
-
   return (
     <ModalDialog
       backdropClassName="confirm-backdrop"
@@ -77,7 +75,6 @@ function ConfirmDialog({
       labelledBy="confirm-dialog-title"
       describedBy="confirm-dialog-description"
       closeDisabled={busy}
-      initialFocus={cancelButton}
       onClose={onCancel}
     >
       <h2 id="confirm-dialog-title">{title}</h2>
@@ -88,7 +85,7 @@ function ConfirmDialog({
         </div>
       )}
       <div className="confirm-dialog-actions">
-        <button ref={cancelButton} type="button" disabled={busy} onClick={onCancel}>
+        <button type="button" disabled={busy} onClick={onCancel}>
           Cancel
         </button>
         <button

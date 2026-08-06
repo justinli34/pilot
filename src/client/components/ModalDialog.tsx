@@ -1,4 +1,4 @@
-import { useEffect, useRef, type KeyboardEvent, type ReactNode, type RefObject } from "react";
+import { useEffect, useRef, type KeyboardEvent, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 
 interface ModalDialogProps {
@@ -8,7 +8,6 @@ interface ModalDialogProps {
   labelledBy: string;
   describedBy?: string;
   closeDisabled?: boolean;
-  initialFocus?: RefObject<HTMLElement | null>;
   onClose: () => void;
   children: ReactNode;
 }
@@ -20,33 +19,20 @@ export function ModalDialog({
   labelledBy,
   describedBy,
   closeDisabled = false,
-  initialFocus,
   onClose,
   children,
 }: ModalDialogProps) {
   const dialog = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const previouslyFocused =
-      document.activeElement instanceof HTMLElement ? document.activeElement : undefined;
     const appRoot = document.getElementById("root");
     const appWasInert = appRoot?.inert ?? false;
     if (appRoot) appRoot.inert = true;
 
-    (initialFocus?.current ?? dialog.current)?.focus();
-
     return () => {
       if (appRoot) appRoot.inert = appWasInert;
-      const canRestorePreviousFocus =
-        previouslyFocused?.isConnected === true &&
-        !previouslyFocused.closest("[inert]") &&
-        window.getComputedStyle(previouslyFocused).visibility !== "hidden";
-      const returnTarget = canRestorePreviousFocus
-        ? previouslyFocused
-        : document.querySelector<HTMLElement>("#main-content");
-      returnTarget?.focus();
     };
-  }, [initialFocus]);
+  }, []);
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key === "Escape" && !closeDisabled) {

@@ -10,7 +10,7 @@ import {
 import { memo, useEffect, useRef, useState } from "react";
 
 import type { ProjectSummary, SessionSummary } from "../../shared/protocol.js";
-import { focusFirstMenuItem, handleMenuKeyDown, shouldCloseMenuOnBlur } from "../menu-keyboard.js";
+import { handleMenuKeyDown, shouldCloseMenuOnBlur } from "../menu-keyboard.js";
 import { SidebarSessionRow } from "./SidebarSessionRow.js";
 
 interface SidebarProjectSectionProps {
@@ -52,7 +52,6 @@ export const SidebarProjectSection = memo(function SidebarProjectSection({
 }: SidebarProjectSectionProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const actions = useRef<HTMLSpanElement>(null);
-  const menuButton = useRef<HTMLButtonElement>(null);
   const creating = creatingProjectId === project.id;
   const archiving = archivingProjectId === project.id;
   const hasRunningSession = sessions.some((session) => session.status === "running");
@@ -65,16 +64,12 @@ export const SidebarProjectSection = memo(function SidebarProjectSection({
 
   useEffect(() => {
     if (!menuOpen) return;
-    const focusFrame = window.requestAnimationFrame(() => focusFirstMenuItem(actions));
     const closeMenu = (event: PointerEvent) => {
       if (event.target instanceof Node && actions.current?.contains(event.target)) return;
       setMenuOpen(false);
     };
     document.addEventListener("pointerdown", closeMenu);
-    return () => {
-      window.cancelAnimationFrame(focusFrame);
-      document.removeEventListener("pointerdown", closeMenu);
-    };
+    return () => document.removeEventListener("pointerdown", closeMenu);
   }, [menuOpen]);
 
   const archiveAll = async () => {
@@ -112,7 +107,7 @@ export const SidebarProjectSection = memo(function SidebarProjectSection({
           }}
           onKeyDown={(event) => {
             if (menuOpen) {
-              handleMenuKeyDown(event, actions, menuButton, () => setMenuOpen(false));
+              handleMenuKeyDown(event, actions, () => setMenuOpen(false));
             }
           }}
         >
@@ -129,7 +124,6 @@ export const SidebarProjectSection = memo(function SidebarProjectSection({
             {creating ? <LoaderCircle className="spin" size={14} /> : <SquarePen size={14} />}
           </button>
           <button
-            ref={menuButton}
             type="button"
             title="Project actions"
             aria-label={`Actions for ${project.name}`}

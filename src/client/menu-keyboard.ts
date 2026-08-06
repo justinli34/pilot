@@ -6,10 +6,6 @@ function enabledMenuItems(container: HTMLElement | null): HTMLButtonElement[] {
   ];
 }
 
-export function focusFirstMenuItem(container: RefObject<HTMLElement | null>): void {
-  enabledMenuItems(container.current)[0]?.focus();
-}
-
 export function shouldCloseMenuOnBlur(
   container: Pick<Node, "contains">,
   relatedTarget: Node | null,
@@ -22,14 +18,12 @@ export function shouldCloseMenuOnBlur(
 export function handleMenuKeyDown(
   event: KeyboardEvent<HTMLElement>,
   container: RefObject<HTMLElement | null>,
-  trigger: RefObject<HTMLButtonElement | null>,
   close: () => void,
 ): void {
   if (event.key === "Escape") {
     event.preventDefault();
     event.stopPropagation();
     close();
-    window.requestAnimationFrame(() => trigger.current?.focus());
     return;
   }
 

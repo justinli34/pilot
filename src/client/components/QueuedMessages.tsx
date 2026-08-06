@@ -185,7 +185,6 @@ export const QueuedMessages = memo(function QueuedMessages({
                     name="queuedMessage"
                     aria-label="Edit queued message"
                     value={editing.text}
-                    autoFocus
                     rows={3}
                     readOnly={pending}
                     onChange={(event) =>

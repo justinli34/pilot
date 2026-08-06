@@ -68,8 +68,6 @@ export function ProjectBrowserDialog({ adding, error, onClose, onAdd }: ProjectB
   const [pathError, setPathError] = useState<string>();
   const [pathSubmitting, setPathSubmitting] = useState(false);
   const [recents] = useState(recentPaths);
-  const closeButton = useRef<HTMLButtonElement>(null);
-  const pathInputRef = useRef<HTMLInputElement>(null);
   const navigation = useRef<AbortController | undefined>(undefined);
 
   const open = async (path?: string) => {
@@ -116,7 +114,6 @@ export function ProjectBrowserDialog({ adding, error, onClose, onAdd }: ProjectB
     const path = pathInput.trim();
     if (!path) {
       setPathError("Enter an absolute server path.");
-      pathInputRef.current?.focus();
       return;
     }
     setPathSubmitting(true);
@@ -129,7 +126,6 @@ export function ProjectBrowserDialog({ adding, error, onClose, onAdd }: ProjectB
       dialogClassName="project-browser-dialog"
       labelledBy="project-browser-title"
       closeDisabled={adding}
-      initialFocus={closeButton}
       onClose={onClose}
     >
       <header className="project-browser-header">
@@ -138,7 +134,6 @@ export function ProjectBrowserDialog({ adding, error, onClose, onAdd }: ProjectB
         </span>
         <h2 id="project-browser-title">Add project</h2>
         <button
-          ref={closeButton}
           type="button"
           aria-label="Close folder browser"
           title="Close"
@@ -154,7 +149,6 @@ export function ProjectBrowserDialog({ adding, error, onClose, onAdd }: ProjectB
         <div className="project-path-field">
           <div className="project-path-controls">
             <input
-              ref={pathInputRef}
               id="project-path-input"
               name="projectPath"
               value={pathInput}

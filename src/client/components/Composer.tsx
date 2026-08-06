@@ -176,10 +176,7 @@ export const Composer = memo(function Composer({
   } = useSlashCommands({
     draft,
     commands,
-    select: (command) => {
-      setDraft(`/${command.name} `);
-      window.requestAnimationFrame(() => textarea.current?.focus());
-    },
+    select: (command) => setDraft(`/${command.name} `),
   });
   const knownContextPercent = contextUsage?.percent;
   const contextPercent = knownContextPercent ?? 0;

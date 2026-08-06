@@ -15,7 +15,7 @@ import {
   type ProjectSummary,
   type SessionSummary,
 } from "../../shared/protocol.js";
-import { focusFirstMenuItem, handleMenuKeyDown, shouldCloseMenuOnBlur } from "../menu-keyboard.js";
+import { handleMenuKeyDown, shouldCloseMenuOnBlur } from "../menu-keyboard.js";
 
 interface SidebarSessionRowProps {
   session: SessionSummary;
@@ -84,7 +84,6 @@ export const SidebarSessionRow = memo(function SidebarSessionRow({
   const [rename, setRename] = useState<string>();
   const [menuOpen, setMenuOpen] = useState(false);
   const actions = useRef<HTMLSpanElement>(null);
-  const menuButton = useRef<HTMLButtonElement>(null);
   const stateLabel = sessionStateLabel(session);
   const showErrorIndicator = session.status === "error";
   const showUnreadIndicator = unread && !selected && !showErrorIndicator;
@@ -99,16 +98,12 @@ export const SidebarSessionRow = memo(function SidebarSessionRow({
 
   useEffect(() => {
     if (!menuOpen) return;
-    const focusFrame = window.requestAnimationFrame(() => focusFirstMenuItem(actions));
     const closeMenu = (event: PointerEvent) => {
       if (event.target instanceof Node && actions.current?.contains(event.target)) return;
       setMenuOpen(false);
     };
     document.addEventListener("pointerdown", closeMenu);
-    return () => {
-      window.cancelAnimationFrame(focusFrame);
-      document.removeEventListener("pointerdown", closeMenu);
-    };
+    return () => document.removeEventListener("pointerdown", closeMenu);
   }, [menuOpen]);
 
   const submitRename = async () => {
@@ -159,7 +154,6 @@ export const SidebarSessionRow = memo(function SidebarSessionRow({
             aria-label="Session name"
             placeholder={sessionTitle(session)}
             autoComplete="off"
-            autoFocus
             disabled={mutatingSessionId !== undefined || archivingProjectId !== undefined}
             onChange={(event) => setRename(event.target.value)}
             onKeyDown={(event) => {
@@ -283,7 +277,7 @@ export const SidebarSessionRow = memo(function SidebarSessionRow({
             }}
             onKeyDown={(event) => {
               if (menuOpen) {
-                handleMenuKeyDown(event, actions, menuButton, () => setMenuOpen(false));
+                handleMenuKeyDown(event, actions, () => setMenuOpen(false));
               }
             }}
           >
@@ -313,7 +307,6 @@ export const SidebarSessionRow = memo(function SidebarSessionRow({
               )}
             </button>
             <button
-              ref={menuButton}
               type="button"
               aria-label={`Actions for ${sessionTitle(session)}`}
               aria-haspopup="menu"

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, type CSSProperties } from "react";
+import { useCallback, type CSSProperties } from "react";
 
 import { MainView } from "./components/MainView.js";
 import { ProjectBrowserDialog } from "./components/ProjectBrowserDialog.js";
@@ -11,34 +11,7 @@ export function App() {
   const layout = useSidebarLayout();
   const { toggle } = layout;
   const workspace = useWorkspaceController({ closeMobileNavigation: layout.closeMobile });
-  const navigationReturnFocus = useRef<HTMLElement | undefined>(undefined);
-
-  useEffect(() => {
-    if (!layout.mobileViewport || !layout.mobileSidebarOpen) return;
-    const focusFrame = window.requestAnimationFrame(() => {
-      document.querySelector<HTMLElement>("#pilot-navigation button:not(:disabled)")?.focus();
-    });
-    return () => window.cancelAnimationFrame(focusFrame);
-  }, [layout.mobileSidebarOpen, layout.mobileViewport]);
-
-  useEffect(() => {
-    if (layout.mobileSidebarOpen || workspace.projectBrowserOpen) return;
-    const returnTarget = navigationReturnFocus.current;
-    if (!returnTarget) return;
-    navigationReturnFocus.current = undefined;
-    if (returnTarget.isConnected) returnTarget.focus();
-  }, [layout.mobileSidebarOpen, workspace.projectBrowserOpen]);
-
-  const toggleNavigation = useCallback(() => {
-    if (
-      layout.mobileViewport &&
-      !layout.mobileSidebarOpen &&
-      document.activeElement instanceof HTMLElement
-    ) {
-      navigationReturnFocus.current = document.activeElement;
-    }
-    toggle();
-  }, [layout.mobileSidebarOpen, layout.mobileViewport, toggle]);
+  const toggleNavigation = useCallback(() => toggle(), [toggle]);
   const sidebarSwipe = useSidebarSwipe({
     enabled: layout.mobileViewport,
     open: layout.mobileSidebarOpen,
