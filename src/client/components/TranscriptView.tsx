@@ -29,11 +29,16 @@ interface TranscriptViewProps {
 }
 
 function transcriptRepresentsError(transcript: TranscriptItem[], error: string): boolean {
-  return transcript.some((item) => {
-    if (item.kind === "message") return item.error === error;
-    if (item.kind === "notice") return item.text.includes(error) || item.title.includes(error);
-    return false;
-  });
+  const currentTurn = transcript.slice(
+    transcript.findLastIndex((item) => item.kind === "message" && item.role === "user") + 1,
+  );
+  const lastAssistant = currentTurn.findLast(
+    (item) => item.kind === "message" && item.role === "assistant",
+  );
+  if (lastAssistant?.kind === "message" && lastAssistant.error === error) return true;
+  return currentTurn.some(
+    (item) => item.kind === "notice" && (item.text.includes(error) || item.title.includes(error)),
+  );
 }
 
 function fallbackTool(
@@ -302,9 +307,9 @@ function AssistantMessagesContent({
     );
   };
 
-  for (const message of messages) {
-    message.blocks.forEach((block, index) => {
-      const key = `${message.id}-${block.type}-${index}`;
+  messages.forEach((message, messageIndex) => {
+    message.blocks.forEach((block, blockIndex) => {
+      const key = `${message.id}-${block.type}-${blockIndex}`;
       if (block.type !== "text") {
         if (isRenderableStep(block)) pendingSteps.push({ key, block });
         return;
@@ -317,11 +322,12 @@ function AssistantMessagesContent({
         </div>,
       );
     });
-    if (message.error) {
+    const showError = !active && messageIndex === messages.length - 1;
+    if (message.error && showError) {
       flushSteps();
       content.push(messageError(message));
     }
-  }
+  });
   flushSteps();
   return <>{content}</>;
 }
@@ -520,10 +526,12 @@ export const TranscriptView = memo(function TranscriptView({
       : undefined;
   const unrepresentedRuntimeError = useMemo(
     () =>
-      runtime.lastError && !transcriptRepresentsError(transcript, runtime.lastError.message)
+      runtime.status === "error" &&
+      runtime.lastError &&
+      !transcriptRepresentsError(transcript, runtime.lastError.message)
         ? runtime.lastError
         : undefined,
-    [runtime.lastError, transcript],
+    [runtime.lastError, runtime.status, transcript],
   );
   const showEmptyState =
     sections.length === 0 && !runtime.isBusy && unrepresentedRuntimeError === undefined;
