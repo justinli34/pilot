@@ -44,7 +44,7 @@
     padding-bottom: 0;
   }
   .archive-section {
-    padding-bottom: var(--space-2-5);
+    padding-bottom: var(--space-2);
   }
   @supports (height: 100dvh) {
     .app-shell > .sidebar {

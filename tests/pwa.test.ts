@@ -62,7 +62,7 @@ describe("progressive web app", () => {
       .toContain(`padding: 0 max(var(--space-2-5), env(safe-area-inset-right)) var(--space-2-5)
       max(var(--space-2-5), env(safe-area-inset-left))`);
     expect(responsive).toMatch(/\.project-tree \{\s+padding-bottom: 0;/);
-    expect(responsive).toMatch(/\.archive-section \{\s+padding-bottom: var\(--space-2-5\);/);
+    expect(responsive).toMatch(/\.archive-section \{\s+padding-bottom: var\(--space-2\);/);
     const standaloneMobile = responsive.slice(
       responsive.indexOf("@media (display-mode: standalone)"),
       responsive.indexOf("@media (max-width: 420px)"),
