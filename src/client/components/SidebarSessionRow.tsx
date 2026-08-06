@@ -182,7 +182,7 @@ export const SidebarSessionRow = memo(function SidebarSessionRow({
               {showRunningIndicator && (
                 <LoaderCircle
                   className="session-running-indicator spin"
-                  size={13}
+                  size={14}
                   aria-label={stateLabel}
                 />
               )}
@@ -251,7 +251,7 @@ export const SidebarSessionRow = memo(function SidebarSessionRow({
                 {showRunningIndicator && (
                   <LoaderCircle
                     className="session-running-indicator spin"
-                    size={13}
+                    size={14}
                     aria-label={stateLabel}
                   />
                 )}

@@ -139,7 +139,7 @@ export function ProjectBrowserDialog({ adding, error, onClose, onAdd }: ProjectB
                   disabled={adding || pathSubmitting}
                   aria-busy={pathSubmitting}
                 >
-                  {pathSubmitting && <LoaderCircle className="spin" aria-hidden="true" size={13} />}
+                  {pathSubmitting && <LoaderCircle className="spin" aria-hidden="true" size={14} />}
                   Go
                 </button>
               </div>
@@ -174,7 +174,7 @@ export function ProjectBrowserDialog({ adding, error, onClose, onAdd }: ProjectB
           <div className="project-folder-list" role="group" aria-label="Server folders">
             {loading && (
               <div className="project-browser-state" role="status">
-                <LoaderCircle className="spin" aria-hidden="true" size={17} /> Loading folders…
+                <LoaderCircle className="spin" aria-hidden="true" size={18} /> Loading folders…
               </div>
             )}
             {!loading && browseError && (

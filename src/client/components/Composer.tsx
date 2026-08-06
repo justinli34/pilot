@@ -396,7 +396,7 @@ export const Composer = memo(function Composer({
             onClick={() => fileInput.current?.click()}
           >
             {readingAttachments ? (
-              <LoaderCircle className="spin" size={15} />
+              <LoaderCircle className="spin" size={16} />
             ) : (
               <Paperclip size={15} />
             )}
@@ -536,7 +536,7 @@ export const Composer = memo(function Composer({
               onClick={() => void stop()}
             >
               {stopping ? (
-                <LoaderCircle className="spin" size={15} />
+                <LoaderCircle className="spin" size={16} />
               ) : (
                 <Square size={13} fill="currentColor" />
               )}

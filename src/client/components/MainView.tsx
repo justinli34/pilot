@@ -87,7 +87,7 @@ export function ToastRegion({
           {connection === "disconnected" ? (
             <CloudOff size={15} />
           ) : (
-            <LoaderCircle className="spin" size={15} />
+            <LoaderCircle className="spin" size={16} />
           )}
           <div>
             <strong>
@@ -333,7 +333,7 @@ export const MainView = memo(function MainView({
             onClick={() => onCreateSession(project.id)}
           >
             {creatingSession ? (
-              <LoaderCircle className="spin" aria-hidden="true" size={15} />
+              <LoaderCircle className="spin" aria-hidden="true" size={16} />
             ) : (
               <Plus aria-hidden="true" size={15} />
             )}

@@ -139,7 +139,7 @@ export const QueuedMessages = memo(function QueuedMessages({
           disabled={!connected || pendingAction !== undefined}
           onClick={() => void clearQueue()}
         >
-          {pendingAction === "clear" && <LoaderCircle className="spin" size={11} />}
+          {pendingAction === "clear" && <LoaderCircle className="spin" size={12} />}
           Clear all
         </button>
       </div>
@@ -223,7 +223,7 @@ export const QueuedMessages = memo(function QueuedMessages({
                       disabled={editInvalid || pending || !connected}
                       onClick={() => void saveEdit()}
                     >
-                      {pending ? <LoaderCircle className="spin" size={13} /> : <Check size={13} />}
+                      {pending ? <LoaderCircle className="spin" size={14} /> : <Check size={13} />}
                       Save
                     </button>
                   </div>
@@ -272,7 +272,7 @@ export const QueuedMessages = memo(function QueuedMessages({
                     disabled={!connected || pendingAction !== undefined}
                     onClick={() => void deleteMessage(message.id)}
                   >
-                    {pending ? <LoaderCircle className="spin" size={13} /> : <Trash2 size={13} />}
+                    {pending ? <LoaderCircle className="spin" size={14} /> : <Trash2 size={13} />}
                   </button>
                 </>
               )}

@@ -159,7 +159,7 @@ export const SidebarProjectSection = memo(function SidebarProjectSection({
                 onClick={() => void archiveAll()}
               >
                 {archiving ? (
-                  <LoaderCircle className="spin" aria-hidden="true" size={13} />
+                  <LoaderCircle className="spin" aria-hidden="true" size={14} />
                 ) : (
                   <Archive aria-hidden="true" size={13} />
                 )}{" "}
